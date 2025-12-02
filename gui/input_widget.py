@@ -1,6 +1,7 @@
 import math
 from typing import Tuple, List
 from PyQt6.QtWidgets import QGroupBox, QVBoxLayout, QLineEdit, QComboBox, QFormLayout
+from PyQt6.QtCore import Qt
 from utils import InputWidgetConstants, OptimizationProblem, UIHelper
 
 
@@ -18,7 +19,7 @@ class InputSection(QGroupBox):
         main_layout.setSpacing(15)
 
         form_layout = QFormLayout()
-        form_layout.setLabelAlignment(float(0))
+        form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignLeft)
         form_layout.setSpacing(10)
 
         # func

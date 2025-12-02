@@ -42,7 +42,7 @@ class UIHelper:
         spinbox.setMaximumWidth(max_width)
         return spinbox
     
-    def create_double_spinbox(self, min_val: float, max_val: float, 
+    def create_double_spinbox(min_val: float, max_val: float, 
                                default: float, step: float, decimals: int = 4) -> QDoubleSpinBox:
         """Helper to create configured QDoubleSpinBox"""
         spinbox = QDoubleSpinBox()

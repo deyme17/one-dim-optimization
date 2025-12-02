@@ -22,8 +22,7 @@ class ResultSection(QGroupBox):
         layout.setSpacing(10)
 
         self.status_label = UIHelper.create_label("Ready",
-            style="font-weight: bold; font-size: 14px; padding: 5px; "
-                  "background-color: #e0e0e0; border-radius: 4px; color: #333;")
+            style="font-weight: bold; font-size: 14px; padding: 5px;")
         self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.status_label)
 

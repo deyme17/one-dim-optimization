@@ -1,31 +1,3 @@
-from enum import Enum
-
-class SolutionStatus(Enum):
-    OPTIMAL = 'optimal'
-    ERROR = 'error'
-    UNKNOWN = 'unknown'
-
-class StatusColor(Enum):
-    OPTIMAL = '#4CAF50'
-    INFEASIBLE = '#f44336'
-    UNBOUNDED = '#FF9800'
-    ERROR = '#f44336'
-    UNKNOWN = '#aaaaaa'
-    PENDING = '#aaaaaa'
-    
-    @staticmethod
-    def get_color(status: SolutionStatus) -> str:
-        """Get color for given status"""
-        return StatusColor[status.name].value
-
-class StatusFormatter:
-    """Status formatting utilities"""
-    STATUS_LABELS = {
-        SolutionStatus.OPTIMAL: "Optimal Solution Found",
-        SolutionStatus.ERROR: "Error",
-        SolutionStatus.UNKNOWN: "Unknown Status",
-    }
-
 # app
 class AppConstants:
     WINDOW_TITLE = "One dimensional optimization"
@@ -54,4 +26,4 @@ class PlotColors:
     FUNCTION_LINE = '#0078D7'
     INTERVAL_LINE = '#FF9800'
     MINIMUM_POINT = '#4CAF50'
-    BACKGROUND = '#f0f0f0'
+    BACKGROUND = "#0A0A0A60"

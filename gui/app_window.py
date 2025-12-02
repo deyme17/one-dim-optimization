@@ -82,7 +82,7 @@ class OneDimOptApp(QMainWindow):
         
         # clear
         self.btn_clear = self._create_button(
-            "Clear", 
+            "Clear Result", 
             AppConstants.BUTTON_HEIGHT, 
             AppConstants.BUTTON_FONT_SIZE
         )
