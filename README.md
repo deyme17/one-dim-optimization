@@ -31,7 +31,7 @@ D:\one-dim-optimization
 │   ├─── __init__.py
 │   ├─── interval_bracketer/    # Logic for finding the initial interval
 │   │   ├─── __init__.py
-│   │   └─── svenns_method.py   # Implementation of Svenn's Algorithm
+│   │   └─── svenns_algorithm.py   # Implementation of Svenn's Algorithm
 │   └─── optimizers/            # Logic for precise minimization
 │       ├─── __init__.py
 │       ├─── fibonacci_method.py
@@ -40,12 +40,11 @@ D:\one-dim-optimization
 │   ├─── __init__.py
 │   ├─── app_window.py          # Main application window
 │   ├─── input_widget.py        # Widget for user inputs
-│   ├─── result_widget.py       # Widget for displaying results
+│   └─── result_widget.py       # Widget for displaying results
 └─── utils/                     # Shared helpers and data structures
     ├─── __init__.py
     ├─── constants.py           # Global constants
     ├─── containers.py          # Dataclasses
-    ├─── formatters.py          # Text/Number formatting utilities
     ├─── interfaces.py          # Abstract Base Classes (IOptimizer, IIntervalBracketer)
     ├─── stylesheet.py          # GUI styling/CSS
     └─── ui_helper.py           # Common UI utility functions
@@ -87,7 +86,7 @@ The algorithm starts at an initial point x_0 and moves in the direction of decre
 * **Termination:** The process stops when the function value begins to rise, indicating the minimum has been passed. The last three points are then used to form the bracket [a, b].
 
 ### 2. Golden Section Search (Optimization)
-**Purpose:** To refine the interval [a, b] found by Svenn's method down to a precise minimum with accuracy epsilon.
+**Purpose:** To refine the interval [a, b] found by Svenn's algorithm down to a precise minimum with accuracy epsilon.
 
 **How it works:**
 This is a zero-order interval reduction method that divides the search range using the **Golden Ratio** (phi≈1.618$).
