@@ -2,10 +2,8 @@ from enum import Enum
 
 class SolutionStatus(Enum):
     OPTIMAL = 'optimal'
-    UNBOUNDED = 'unbounded'
     ERROR = 'error'
     UNKNOWN = 'unknown'
-    PENDING = 'pending'
 
 class StatusColor(Enum):
     OPTIMAL = '#4CAF50'
@@ -24,10 +22,8 @@ class StatusFormatter:
     """Status formatting utilities"""
     STATUS_LABELS = {
         SolutionStatus.OPTIMAL: "Optimal Solution Found",
-        SolutionStatus.UNBOUNDED: "Function is Unbounded",
         SolutionStatus.ERROR: "Error",
         SolutionStatus.UNKNOWN: "Unknown Status",
-        SolutionStatus.PENDING: "Finding the optimal...",
     }
 
 # app
