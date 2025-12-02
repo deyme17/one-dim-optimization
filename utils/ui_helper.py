@@ -1,5 +1,5 @@
+from PyQt6.QtWidgets import QLabel, QLineEdit, QSpinBox, QLayout, QDoubleSpinBox
 from typing import Optional
-from PyQt6.QtWidgets import QLabel, QLineEdit, QSpinBox, QLayout
 
 
 class UIHelper:
@@ -40,4 +40,14 @@ class UIHelper:
         spinbox.setMaximum(max_val)
         spinbox.setValue(default)
         spinbox.setMaximumWidth(max_width)
+        return spinbox
+    
+    def create_double_spinbox(self, min_val: float, max_val: float, 
+                               default: float, step: float, decimals: int = 4) -> QDoubleSpinBox:
+        """Helper to create configured QDoubleSpinBox"""
+        spinbox = QDoubleSpinBox()
+        spinbox.setRange(min_val, max_val)
+        spinbox.setValue(default)
+        spinbox.setSingleStep(step)
+        spinbox.setDecimals(decimals)
         return spinbox

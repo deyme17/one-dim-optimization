@@ -1,13 +1,14 @@
 import numpy as np
 from typing import Callable
 from PyQt6.QtWidgets import (
-    QGroupBox, QVBoxLayout, QLabel, QFrame, QGridLayout, QSizePolicy
+    QGroupBox, QVBoxLayout, QFrame, QGridLayout, QSizePolicy
 )
 from PyQt6.QtCore import Qt
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-from utils import OptimizationResult, IntervalResult, ResultWidgetConstants, UIHelper
+from utils import (OptimizationResult, IntervalResult, ResultWidgetConstants, 
+                   UIHelper, PlotColors)
 
 
 class ResultSection(QGroupBox):
@@ -22,13 +23,14 @@ class ResultSection(QGroupBox):
 
         self.status_label = UIHelper.create_label("Ready",
             style="font-weight: bold; font-size: 14px; padding: 5px; "
-                    "background-color: #e0e0e0; border-radius: 4px; color: #333;")
+                  "background-color: #e0e0e0; border-radius: 4px; color: #333;")
         self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.status_label)
 
         self.result_card = QFrame()
         self.result_card.setStyleSheet("background-color: #2b2b2b; border-radius: 8px; border: 1px solid #3d3d3d;")
         card_layout = QVBoxLayout(self.result_card)
+        
         value_style = f"color: #4CAF50; font-size: {ResultWidgetConstants.VALUE_SIZE}px; font-weight: bold; font-family: {ResultWidgetConstants.FONT_FAMILY};"
         header_style = f"font-size: {ResultWidgetConstants.HEADER_SIZE}px; font-family: {ResultWidgetConstants.FONT_FAMILY};"
         
@@ -45,7 +47,7 @@ class ResultSection(QGroupBox):
         
         layout.addWidget(self.result_card)
 
-        # details
+        # Details
         details_layout = QGridLayout()
         self.lbl_iters = UIHelper.create_label("Iterations: -")
         self.lbl_final_eps = UIHelper.create_label("Precision: -")
@@ -55,7 +57,7 @@ class ResultSection(QGroupBox):
 
         # graph
         self.figure = Figure(figsize=(5, 4), dpi=100)
-        self.figure.patch.set_facecolor('#f0f0f0') 
+        self.figure.patch.set_facecolor(PlotColors.BACKGROUND) 
         self.canvas = FigureCanvasQTAgg(self.figure)
         self.canvas.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout.addWidget(self.canvas)
@@ -90,12 +92,12 @@ class ResultSection(QGroupBox):
             y = np.array([func(xi) for xi in x])
 
             # plot
-            ax.plot(x, y, label='f(x)', color='#0078D7', linewidth=2)
+            ax.plot(x, y, label='f(x)', color=PlotColors.FUNCTION_LINE, linewidth=2)
             # interval
-            ax.axvline(a, color='#FF5722', linestyle='--', alpha=0.7, label='Interval')
-            ax.axvline(b, color='#FF5722', linestyle='--', alpha=0.7)
+            ax.axvline(a, color=PlotColors.INTERVAL_LINE, linestyle='--', alpha=0.7, label='Interval')
+            ax.axvline(b, color=PlotColors.INTERVAL_LINE, linestyle='--', alpha=0.7)
             # min point
-            ax.plot(opt_res.x_min, opt_res.value, 'o', color='#4CAF50', markersize=8, zorder=5, label='Minimum')
+            ax.plot(opt_res.x_min, opt_res.value, 'o', color=PlotColors.MINIMUM_POINT, markersize=8, zorder=5, label='Minimum')
 
             ax.grid(True, linestyle=':', alpha=0.6)
             ax.legend(fontsize='small')

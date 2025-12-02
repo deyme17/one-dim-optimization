@@ -12,7 +12,8 @@ from . import InputSection, ResultSection
 class OneDimOptApp(QMainWindow):
     """Main application window for one-dimensional optimization app"""
     def __init__(self, input_section: InputSection, results_section: ResultSection,
-                 bracketers: Dict[str, IIntervalBracketer], optimizers: Dict[str, IOptimizer]) -> None:
+                 bracketers: Dict[str, IIntervalBracketer], 
+                 optimizers: Dict[str, IOptimizer]) -> None:
         super().__init__()
         self.input_section = input_section
         self.results_section = results_section
@@ -23,19 +24,28 @@ class OneDimOptApp(QMainWindow):
         self.init_ui()
 
     def _setup_window(self) -> None:
+        """Setup window properties using AppConstants"""
         self.setWindowTitle(AppConstants.WINDOW_TITLE)
-        self.setMinimumSize(AppConstants.WINDOW_SIZE[0], AppConstants.WINDOW_SIZE[1])
+        self.setMinimumSize(*AppConstants.WINDOW_SIZE)
         self.setStyleSheet(StyleSheet.DARK_STYLE)
         
     def init_ui(self) -> None:
+        """Initialize the user interface"""
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setSpacing(15)
-        main_layout.setContentsMargins(15, 15, 15, 15)
+        main_layout.setSpacing(AppConstants.LAYOUT_SPACING)
+        main_layout.setContentsMargins(
+            AppConstants.LAYOUT_MARGINS,
+            AppConstants.LAYOUT_MARGINS,
+            AppConstants.LAYOUT_MARGINS,
+            AppConstants.LAYOUT_MARGINS
+        )
+        # title
         title = self._create_title()
         main_layout.addWidget(title)
         
+        # tabs
         self.tabs = QTabWidget()
         # input section
         input_tab = QWidget()
@@ -50,26 +60,43 @@ class OneDimOptApp(QMainWindow):
         self.tabs.addTab(results_tab, "Results & Graph")
         
         main_layout.addWidget(self.tabs)
+        
+        # buttons
         buttons_layout = self._create_buttons_layout()
         main_layout.addLayout(buttons_layout)
     
     def _create_title(self) -> QLabel:
-        title = QLabel("One-dimensional Optimization")
+        """Create title label using AppConstants"""
+        title = QLabel(AppConstants.WINDOW_TITLE)
         title_font = QFont()
-        title_font.setPointSize(18)
+        title_font.setPointSize(AppConstants.TITLE_FONT_SIZE)
         title_font.setBold(True)
         title.setFont(title_font)
-        title.setStyleSheet("color: #333; margin-bottom: 5px;")
+        title.setStyleSheet("color: #ffffff; margin-bottom: 5px;")
         return title
     
     def _create_buttons_layout(self) -> QHBoxLayout:
+        """Create button layout using AppConstants"""
         layout = QHBoxLayout()
-        layout.setSpacing(20)
-        self.btn_clear = self._create_button("Clear", 45, 12)
+        layout.setSpacing(AppConstants.LAYOUT_SPACING)
+        
+        # clear
+        self.btn_clear = self._create_button(
+            "Clear", 
+            AppConstants.BUTTON_HEIGHT, 
+            AppConstants.BUTTON_FONT_SIZE
+        )
         self.btn_clear.clicked.connect(self.on_clear)
-        self.btn_optimize = self._create_button("Find optimum", 45, 12)
+        
+        # optimize
+        self.btn_optimize = self._create_button(
+            "Find optimum", 
+            AppConstants.BUTTON_HEIGHT, 
+            AppConstants.BUTTON_FONT_SIZE
+        )
         self.btn_optimize.setStyleSheet("background-color: #0078D7; color: white; border-radius: 4px;")
         self.btn_optimize.clicked.connect(self.on_optimize)
+        
         layout.addStretch()
         layout.addWidget(self.btn_clear)
         layout.addWidget(self.btn_optimize)
@@ -77,6 +104,7 @@ class OneDimOptApp(QMainWindow):
     
     @staticmethod
     def _create_button(text: str, height: int, font_size: int) -> QPushButton:
+        """Create styled button"""
         button = QPushButton(text)
         button.setMinimumHeight(height)
         button.setMinimumWidth(100)
@@ -87,7 +115,7 @@ class OneDimOptApp(QMainWindow):
         return button
 
     def on_optimize(self) -> None:
-        """Handle solve button click: Execute Svenn -> Optimize -> Plot"""
+        """Handle optimize button click: Execute bracketing -> Optimize -> Plot"""
         try:
             problem, success, error_msg = self.input_section.get_data()
             if not success:
@@ -113,9 +141,11 @@ class OneDimOptApp(QMainWindow):
         except Exception as e:
             self._show_error(str(e))
 
-    def on_clear(self):
+    def on_clear(self) -> None:
+        """Handle clear button click"""
         self.results_section.clear()
         self.tabs.setCurrentIndex(0)
 
     def _show_error(self, message: str) -> None:
+        """Display error message dialog"""
         QMessageBox.warning(self, "Calculation Error", message)

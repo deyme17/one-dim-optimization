@@ -47,4 +47,11 @@ class InputWidgetConstants:
 class ResultWidgetConstants:
     FONT_FAMILY = "Segoe UI"
     HEADER_SIZE = 12
-    VALUE_SIZE = 14
+    VALUE_SIZE = 24
+
+# plot
+class PlotColors:
+    FUNCTION_LINE = '#0078D7'
+    INTERVAL_LINE = '#FF9800'
+    MINIMUM_POINT = '#4CAF50'
+    BACKGROUND = '#f0f0f0'

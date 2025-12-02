@@ -1,10 +1,7 @@
 import math
 from typing import Tuple, List
-from PyQt6.QtWidgets import (
-    QGroupBox, QVBoxLayout, QLineEdit, 
-    QComboBox, QFormLayout, QDoubleSpinBox
-)
-from utils import InputWidgetConstants, OptimizationProblem
+from PyQt6.QtWidgets import QGroupBox, QVBoxLayout, QLineEdit, QComboBox, QFormLayout
+from utils import InputWidgetConstants, OptimizationProblem, UIHelper
 
 
 class InputSection(QGroupBox):
@@ -24,21 +21,19 @@ class InputSection(QGroupBox):
         form_layout.setLabelAlignment(float(0))
         form_layout.setSpacing(10)
 
+        # func
         self.func_input = QLineEdit()
         self.func_input.setPlaceholderText("e.g. x**2 + 2*x + 1")
         self.func_input.setText(InputWidgetConstants.DEFAULT_FUNC)
-        form_layout.addRow("Target Function f(x):", self.func_input)
-
+        form_layout.addRow(UIHelper.create_label("Objective Function f(x):"), self.func_input)
         # bracketer algorithm selection
         self.bracketer_combo = QComboBox()
         self.bracketer_combo.addItems(self.bracketer_names)
-        form_layout.addRow("'Bracketing' algorithm:", self.bracketer_combo)
-
+        form_layout.addRow(UIHelper.create_label("'Bracketing' algorithm:"), self.bracketer_combo)
         # optimization method selection
         self.opt_method_combo = QComboBox()
         self.opt_method_combo.addItems(self.opt_methods_names)
-        form_layout.addRow("Optimization Method:", self.opt_method_combo)
-
+        form_layout.addRow(UIHelper.create_label("Optimization Method:"), self.opt_method_combo)
         main_layout.addLayout(form_layout)
 
         # params
@@ -46,25 +41,24 @@ class InputSection(QGroupBox):
         params_layout = QFormLayout(params_group)
         
         # x0
-        self.x0_input = QDoubleSpinBox()
-        self.x0_input.setRange(-10000.0, 10000.0)
-        self.x0_input.setValue(InputWidgetConstants.DEFAULT_X0)
-        self.x0_input.setSingleStep(0.5)
-        params_layout.addRow("Start Point (x₀):", self.x0_input)
+        self.x0_input = UIHelper.create_double_spinbox(
+            -10000.0, 10000.0, 
+            InputWidgetConstants.DEFAULT_X0, 
+            0.5)
+        params_layout.addRow(UIHelper.create_label("Start Point (x₀):"),
+                             self.x0_input)
         # h
-        self.h_input = QDoubleSpinBox()
-        self.h_input.setRange(0.0001, 100.0)
-        self.h_input.setValue(InputWidgetConstants.DEFAULT_H)
-        self.h_input.setSingleStep(0.1)
-        params_layout.addRow("Initial Step (h):", self.h_input)
+        self.h_input = UIHelper.create_double_spinbox(
+            0.0001, 100.0,
+            InputWidgetConstants.DEFAULT_H,
+            0.1)
+        params_layout.addRow(UIHelper.create_label("Initial Step (h):"), self.h_input)
         # eps
-        self.eps_input = QDoubleSpinBox()
-        self.eps_input.setRange(0.000001, 1.0)
-        self.eps_input.setDecimals(6)
-        self.eps_input.setValue(InputWidgetConstants.DEFAULT_EPS)
-        self.eps_input.setSingleStep(0.001)
-        params_layout.addRow("Precision (ε):", self.eps_input)
-
+        self.eps_input = UIHelper.create_double_spinbox(
+            0.000001, 1.0,
+            InputWidgetConstants.DEFAULT_EPS,
+            0.001, decimals=6)
+        params_layout.addRow(UIHelper.create_label("Precision (ε):"), self.eps_input)
         main_layout.addWidget(params_group)
         main_layout.addStretch()
 
