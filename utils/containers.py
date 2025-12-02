@@ -5,12 +5,12 @@ from dataclasses import dataclass
 class OptimizationProblem:
     obj_func: Callable[[float], float]
     # opt meyhod config
-    epsilon: float = 0.001
+    epsilon: float
     method_name: str
     # bracketer config
     bracketer_name: str
-    x_0: float = 0.0
-    h: float = 0.1
+    x_0: float
+    h: float
 
 @dataclass
 class IntervalResult:
