@@ -42,8 +42,13 @@ class AppConstants:
 
 # input widget
 class InputWidgetConstants:
-    pass
+    DEFAULT_FUNC = "(x + 1.4)**1.51 + 3*sin(1.06*x)"
+    DEFAULT_X0 = -1.0
+    DEFAULT_H = 0.1
+    DEFAULT_EPS = 0.001
 
 # result widget
 class ResultWidgetConstants:
-    pass
+    FONT_FAMILY = "Segoe UI"
+    HEADER_SIZE = 12
+    VALUE_SIZE = 14
