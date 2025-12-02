@@ -7,7 +7,7 @@ from PyQt6.QtCore import Qt
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-from utils import OptimizationResult, IntervalResult
+from utils import OptimizationResult, IntervalResult, ResultWidgetConstants, UIHelper
 
 
 class ResultSection(QGroupBox):
@@ -19,36 +19,36 @@ class ResultSection(QGroupBox):
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
         layout.setSpacing(10)
-        
-        self.status_label = QLabel("Ready")
+
+        self.status_label = UIHelper.create_label("Ready",
+            style="font-weight: bold; font-size: 14px; padding: 5px; "
+                    "background-color: #e0e0e0; border-radius: 4px; color: #333;")
         self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.status_label.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px; "
-                                        "background-color: #e0e0e0; border-radius: 4px; color: #333;")
         layout.addWidget(self.status_label)
 
         self.result_card = QFrame()
         self.result_card.setStyleSheet("background-color: #2b2b2b; border-radius: 8px; border: 1px solid #3d3d3d;")
         card_layout = QVBoxLayout(self.result_card)
+        value_style = f"color: #4CAF50; font-size: {ResultWidgetConstants.VALUE_SIZE}px; font-weight: bold; font-family: {ResultWidgetConstants.FONT_FAMILY};"
+        header_style = f"font-size: {ResultWidgetConstants.HEADER_SIZE}px; font-family: {ResultWidgetConstants.FONT_FAMILY};"
         
         # min
-        self.lbl_xmin_val = QLabel("-")
-        self.lbl_xmin_val.setStyleSheet("color: #4CAF50; font-size: 24px; font-weight: bold;")
+        card_layout.addWidget(UIHelper.create_label("Minimum Point (x*):", style=header_style))
+        self.lbl_xmin_val = UIHelper.create_label("-", style=value_style)
         self.lbl_xmin_val.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        card_layout.addWidget(QLabel("Minimum Point (x*):", alignment=Qt.AlignmentFlag.AlignHCenter))
         card_layout.addWidget(self.lbl_xmin_val)
         # min value
-        self.lbl_fmin_val = QLabel("-")
-        self.lbl_fmin_val.setStyleSheet("color: #4CAF50; font-size: 18px;")
+        card_layout.addWidget(UIHelper.create_label("Function Value f(x*):", style=header_style))
+        self.lbl_fmin_val = UIHelper.create_label("-", style=value_style.replace("bold", "normal"))
         self.lbl_fmin_val.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        card_layout.addWidget(QLabel("Function Value f(x*):", alignment=Qt.AlignmentFlag.AlignHCenter))
         card_layout.addWidget(self.lbl_fmin_val)
         
         layout.addWidget(self.result_card)
 
         # details
         details_layout = QGridLayout()
-        self.lbl_iters = QLabel("Iterations: -")
-        self.lbl_final_eps = QLabel("Precision: -")
+        self.lbl_iters = UIHelper.create_label("Iterations: -")
+        self.lbl_final_eps = UIHelper.create_label("Precision: -")
         details_layout.addWidget(self.lbl_iters, 0, 0)
         details_layout.addWidget(self.lbl_final_eps, 0, 1)
         layout.addLayout(details_layout)
