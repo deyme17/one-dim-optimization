@@ -1,3 +1,47 @@
+from enum import Enum
+
+class SolutionStatus(Enum):
+    OPTIMAL = 'optimal'
+    NOT_CONVERGED = 'not_converged'
+    MAX_ITERATIONS = 'max_iterations'
+    ERROR = 'error'
+    UNKNOWN = 'unknown'
+
+class StatusColor(Enum):
+    OPTIMAL = '#4CAF50'
+    INFEASIBLE = '#f44336'
+    UNBOUNDED = '#FF9800'
+    ERROR = '#f44336'
+    UNKNOWN = '#aaaaaa'
+    PENDING = '#aaaaaa'
+    NOT_CONVERGED = '#FF9800'
+    
+    @staticmethod
+    def get_color(status: SolutionStatus) -> str:
+        """Get color for given status"""
+        color_map = {
+            SolutionStatus.OPTIMAL: StatusColor.OPTIMAL.value,
+            SolutionStatus.NOT_CONVERGED: StatusColor.NOT_CONVERGED.value,
+            SolutionStatus.MAX_ITERATIONS: StatusColor.NOT_CONVERGED.value,
+            SolutionStatus.ERROR: StatusColor.ERROR.value,
+            SolutionStatus.UNKNOWN: StatusColor.UNKNOWN.value,
+        }
+        return color_map.get(status, StatusColor.UNKNOWN.value)
+
+class StatusMessages:
+    LABELS = {
+        SolutionStatus.OPTIMAL: "Optimal Solution Found",
+        SolutionStatus.NOT_CONVERGED: "Not Converged",
+        SolutionStatus.MAX_ITERATIONS: "Maximum Iterations Reached",
+        SolutionStatus.ERROR: "Error Occurred",
+        SolutionStatus.UNKNOWN: "Unknown Status",
+    }
+    
+    @staticmethod
+    def get_message(status: SolutionStatus) -> str:
+        """Get message for given status"""
+        return StatusMessages.LABELS.get(status, "Unknown Status")
+    
 # app
 class AppConstants:
     WINDOW_TITLE = "One dimensional optimization"

@@ -8,7 +8,7 @@ from PyQt6.QtCore import Qt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from utils import (OptimizationResult, IntervalResult, ResultWidgetConstants, 
-                   UIHelper, PlotColors)
+                   UIHelper, PlotColors, StatusMessages, StatusColor, SolutionStatus)
 
 
 class ResultSection(QGroupBox):
@@ -63,17 +63,28 @@ class ResultSection(QGroupBox):
 
     def display_results(self, opt_result: OptimizationResult, interval_result: IntervalResult, func_callable: Callable[[float], float]) -> None:
         """Display text results and plot the graph"""
-        self.status_label.setText("Solution Found")
-        self.status_label.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px; "
-                                        "background-color: #4CAF50; border-radius: 4px; color: white;")
-        self.lbl_xmin_val.setText(f"{opt_result.x_min:.6f}")
-        self.lbl_fmin_val.setText(f"{opt_result.value:.6f}")
+        status = opt_result.status or SolutionStatus.UNKNOWN.value
+        status_text = StatusMessages.get_message(status)
+        status_color = StatusColor.get_color(status)
+        self.status_label.setText(status_text)
+        self.status_label.setStyleSheet(
+            f"font-weight: bold; font-size: 14px; padding: 5px; "
+            f"background-color: {status_color}; border-radius: 4px; color: white;"
+        )
+        # update values
+        if status == SolutionStatus.OPTIMAL.value:
+            self.lbl_xmin_val.setText(f"{opt_result.x_min:.5f}")
+            self.lbl_fmin_val.setText(f"{opt_result.value:.5f}")
+        else:
+            self.lbl_xmin_val.setText("N/A")
+            self.lbl_fmin_val.setText("N/A")
+            
         self.lbl_iters.setText(f"Iterations: {opt_result.iterations}")
-        self.lbl_final_eps.setText(f"Precision: {opt_result.final_epsilon:.2e}")
+        self.lbl_final_eps.setText(f"Precision: {opt_result.final_epsilon:.5f}")
         self.result_card.show()
 
-        # update graph
-        self.plot_graph(func_callable, interval_result, opt_result)
+        if status == SolutionStatus.OPTIMAL.value:
+            self.plot_graph(func_callable, interval_result, opt_result)
 
     def plot_graph(self, func, interval_res: IntervalResult, opt_res: OptimizationResult) -> None:
         """Draws function, uncertainty interval, and minimum point"""
@@ -108,7 +119,7 @@ class ResultSection(QGroupBox):
 
     def clear(self) -> None:
         self.status_label.setText("Ready")
-        self.status_label.setStyleSheet("background-color: #e0e0e0; border-radius: 4px; color: #333;")
+        self.status_label.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px;")
         self.lbl_xmin_val.setText("-")
         self.lbl_fmin_val.setText("-")
         self.figure.clear()

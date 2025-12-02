@@ -24,3 +24,4 @@ class OptimizationResult:
     value: float
     iterations: int
     final_epsilon: float
+    status: str = 'optimal'
