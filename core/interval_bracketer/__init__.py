@@ -1,6 +1,6 @@
 from utils import IIntervalBracketer
-from .svenns_method import SvennsMethod
+from .svenns_algorithm import SvennsAlgorithm
 
 bracketers: dict[str, IIntervalBracketer] = {
-    "Svenn's method": SvennsMethod(),
+    "Svenn's algorithm": SvennsAlgorithm(),
 }

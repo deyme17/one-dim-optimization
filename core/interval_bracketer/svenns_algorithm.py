@@ -1,4 +1,4 @@
 from utils import IIntervalBracketer
 
-class SvennsMethod(IIntervalBracketer):
+class SvennsAlgorithm(IIntervalBracketer):
     pass
