@@ -44,7 +44,7 @@ D:\one-dim-optimization
 └─── utils/                     # Shared helpers and data structures
     ├─── __init__.py
     ├─── constants.py           # Global constants
-    ├─── containers.py          # Dataclasses (SvennResult, OptimizationResult)
+    ├─── containers.py          # Dataclasses
     ├─── formatters.py          # Text/Number formatting utilities
     ├─── interfaces.py          # Abstract Base Classes (IOptimizer, IIntervalBracketer)
     ├─── stylesheet.py          # GUI styling/CSS
