@@ -9,7 +9,10 @@ from gui import InputSection, ResultSection
 def main():
     app = QApplication(sys.argv)
     window = OneDimOptApp(
-        input_section=InputSection(),
+        input_section=InputSection(
+            optimizers.keys(), 
+            bracketers.keys()
+        ),
         results_section=ResultSection(),
         optimizers=optimizers,
         bracketers=bracketers
