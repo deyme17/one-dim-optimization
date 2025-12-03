@@ -113,13 +113,16 @@ class ResultSection(QGroupBox):
             ax.legend(fontsize='small')
             ax.set_title("Optimization Visualization")
             
+            self.figure.patch.set_facecolor("#FFFFFF")
             self.canvas.draw()
         except Exception as e:
+            self.figure.patch.set_facecolor(PlotColors.BACKGROUND)
             raise Exception(str(e))
 
     def clear(self) -> None:
         self.status_label.setText("Ready")
         self.status_label.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px;")
+        self.figure.patch.set_facecolor(PlotColors.BACKGROUND)
         self.lbl_xmin_val.setText("-")
         self.lbl_fmin_val.setText("-")
         self.figure.clear()
