@@ -21,7 +21,7 @@ class SvennsAlgorithm(IIntervalBracketer):
         y = obj_func(x_0)
 
         k = 0
-        while a is None and b is None:
+        while a is None or b is None:
             if k > self.MAX_ITER: return
             
             new_x = x + 2**k * h
