@@ -9,12 +9,10 @@ class SolutionStatus(Enum):
 
 class StatusColor(Enum):
     OPTIMAL = '#4CAF50'
-    INFEASIBLE = '#f44336'
-    UNBOUNDED = '#FF9800'
-    ERROR = '#f44336'
-    UNKNOWN = '#aaaaaa'
-    PENDING = '#aaaaaa'
     NOT_CONVERGED = '#FF9800'
+    MAX_ITERATIONS = "#D34D00"
+    ERROR = "#ff1100"
+    UNKNOWN = '#aaaaaa'
     
     @staticmethod
     def get_color(status: SolutionStatus) -> str:

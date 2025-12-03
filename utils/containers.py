@@ -1,4 +1,4 @@
-from typing import Tuple, Callable
+from typing import Tuple, Callable, Optional
 from dataclasses import dataclass
 
 @dataclass
@@ -20,8 +20,8 @@ class IntervalResult:
 
 @dataclass
 class OptimizationResult:
-    x_min: float
-    value: float
-    iterations: int
-    final_epsilon: float
+    x_min: Optional[float]
+    value: Optional[float]
+    iterations: Optional[int]
+    final_epsilon: Optional[float]
     status: str = 'optimal'
