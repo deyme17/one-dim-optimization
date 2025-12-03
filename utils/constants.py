@@ -28,11 +28,11 @@ class StatusColor(Enum):
 
 class StatusMessages:
     LABELS = {
-        SolutionStatus.OPTIMAL: "Optimal Solution Found",
-        SolutionStatus.NOT_CONVERGED: "Not Converged",
-        SolutionStatus.MAX_ITERATIONS: "Maximum Iterations Reached",
-        SolutionStatus.ERROR: "Error Occurred",
-        SolutionStatus.UNKNOWN: "Unknown Status",
+        SolutionStatus.OPTIMAL.value: "Optimal Solution Found",
+        SolutionStatus.NOT_CONVERGED.value: "Not Converged",
+        SolutionStatus.MAX_ITERATIONS.value: "Maximum Iterations Reached",
+        SolutionStatus.ERROR.value: "Error Occurred",
+        SolutionStatus.UNKNOWN.value: "Unknown Status",
     }
     
     @staticmethod
