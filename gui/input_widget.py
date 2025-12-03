@@ -3,6 +3,7 @@ from typing import Tuple, List
 from PyQt6.QtWidgets import QGroupBox, QVBoxLayout, QLineEdit, QComboBox, QFormLayout
 from PyQt6.QtCore import Qt
 from utils import InputWidgetConstants, OptimizationProblem, UIHelper
+import warnings
 
 
 class InputSection(QGroupBox):
@@ -75,13 +76,23 @@ class InputSection(QGroupBox):
             safe_dict = {k: v for k, v in math.__dict__.items() if not k.startswith("__")}
             def objective_function(x: float) -> float:
                 try:
-                    safe_dict["x"] = x
-                    val = eval(func_str, {"__builtins__": {}}, safe_dict)
-                    if val is None or isinstance(val, complex) or math.isnan(val):
-                        return float("inf")
-                    return val
-                except Exception:
+                    with warnings.catch_warnings():
+                        warnings.filterwarnings('ignore', category=RuntimeWarning)
+                        
+                        safe_dict["x"] = x
+                        val = eval(func_str, {"__builtins__": {}}, safe_dict)
+                        
+                        # invalid results?
+                        if val is None or isinstance(val, complex):
+                            return float("inf")
+                        if math.isnan(val) or math.isinf(val):
+                            return float("inf")
+                        
+                        return float(val)
+                except (ValueError, ZeroDivisionError, OverflowError):
                     return float("inf")
+                except Exception as e:
+                    raise Exception(str(e))
 
             problem = OptimizationProblem(
                 obj_func=objective_function,
