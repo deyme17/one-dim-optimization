@@ -41,7 +41,7 @@ class SvennsAlgorithm(IIntervalBracketer):
                     b = x_0
                 c = x
                 break
-        k += 1
+            k += 1
 
         return IntervalResult(
             interval=(a, b),
