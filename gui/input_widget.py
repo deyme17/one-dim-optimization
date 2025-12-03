@@ -74,8 +74,14 @@ class InputSection(QGroupBox):
             # allow math funcs
             safe_dict = {k: v for k, v in math.__dict__.items() if not k.startswith("__")}
             def objective_function(x: float) -> float:
-                safe_dict['x'] = x
-                return eval(func_str, {"__builtins__": {}}, safe_dict)
+                try:
+                    safe_dict["x"] = x
+                    val = eval(func_str, {"__builtins__": {}}, safe_dict)
+                    if val is None or isinstance(val, complex) or math.isnan(val):
+                        return float("inf")
+                    return val
+                except Exception:
+                    return float("inf")
 
             problem = OptimizationProblem(
                 obj_func=objective_function,
