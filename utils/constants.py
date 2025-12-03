@@ -15,14 +15,14 @@ class StatusColor(Enum):
     UNKNOWN = '#aaaaaa'
     
     @staticmethod
-    def get_color(status: SolutionStatus) -> str:
+    def get_color(status: str) -> str:
         """Get color for given status"""
         color_map = {
-            SolutionStatus.OPTIMAL: StatusColor.OPTIMAL.value,
-            SolutionStatus.NOT_CONVERGED: StatusColor.NOT_CONVERGED.value,
-            SolutionStatus.MAX_ITERATIONS: StatusColor.NOT_CONVERGED.value,
-            SolutionStatus.ERROR: StatusColor.ERROR.value,
-            SolutionStatus.UNKNOWN: StatusColor.UNKNOWN.value,
+            SolutionStatus.OPTIMAL.value: StatusColor.OPTIMAL.value,
+            SolutionStatus.NOT_CONVERGED.value: StatusColor.NOT_CONVERGED.value,
+            SolutionStatus.MAX_ITERATIONS.value: StatusColor.NOT_CONVERGED.value,
+            SolutionStatus.ERROR.value: StatusColor.ERROR.value,
+            SolutionStatus.UNKNOWN.value: StatusColor.UNKNOWN.value,
         }
         return color_map.get(status, StatusColor.UNKNOWN.value)
 
