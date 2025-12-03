@@ -89,7 +89,7 @@ The algorithm starts at an initial point x_0 and moves in the direction of decre
 **Purpose:** To refine the interval [a, b] found by Svenn's algorithm down to a precise minimum with accuracy epsilon.
 
 **How it works:**
-This is a zero-order interval reduction method that divides the search range using the **Golden Ratio** (phi≈1.618$).
+This is a zero-order interval reduction method that divides the search range using the **Golden Ratio** (phi≈1.618).
 * **Key Feature:** It is highly computationally efficient. After the first iteration, it requires only **one new function evaluation** per step, as it reuses one interior point from the previous iteration.
 
 ### 3. Fibonacci Search (Optimization)
