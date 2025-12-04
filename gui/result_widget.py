@@ -61,7 +61,7 @@ class ResultSection(QGroupBox):
         self.canvas.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout.addWidget(self.canvas)
 
-    def display_results(self, opt_result: OptimizationResult, interval_result: IntervalResult, func_callable: Callable[[float], float]) -> None:
+    def display_results(self, opt_result: OptimizationResult, interval_result: IntervalResult, func: Callable[[float], float]) -> None:
         """Display text results and plot the graph"""
         status = opt_result.status or SolutionStatus.UNKNOWN.value
         status_text = StatusMessages.get_message(status)
@@ -84,9 +84,9 @@ class ResultSection(QGroupBox):
         self.result_card.show()
 
         if status == SolutionStatus.OPTIMAL.value:
-            self.plot_graph(func_callable, interval_result, opt_result)
+            self.plot_graph(func, interval_result, opt_result)
 
-    def plot_graph(self, func, interval_res: IntervalResult, opt_res: OptimizationResult) -> None:
+    def plot_graph(self, func: Callable[[float], float], interval_res: IntervalResult, opt_res: OptimizationResult) -> None:
         """Draws function, uncertainty interval, and minimum point"""
         try:
             self.figure.clear()
